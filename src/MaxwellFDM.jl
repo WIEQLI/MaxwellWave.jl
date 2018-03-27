@@ -1,6 +1,6 @@
 module MaxwellFDM
 
-using GeometryPrimitives, StaticArrays
+using GeometryPrimitives, Pardiso, StaticArrays
 using DataStructures  # SortedSet in gridgen.jl
 
 export SVec3Complex, SMat3Complex, ParamInd, ObjInd
@@ -71,5 +71,6 @@ include("smoothing.jl")
 include("operator.jl")
 include("pml.jl")
 # include("equation.jl")
+include("eigsol.jl")
 
 end # module MaxwellFDM
