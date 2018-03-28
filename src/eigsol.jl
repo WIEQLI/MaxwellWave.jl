@@ -17,7 +17,11 @@ function rqi!(A::AbsMat{T},  # system matrix
     set_msglvl!(ps, Pardiso.MESSAGE_LEVEL_ON)
 
     # First set the matrix type to handle general real symmetric matrices
-    set_matrixtype!(ps, Pardiso.REAL_SYM_INDEF)
+    if T<:Real
+        set_matrixtype!(ps, Pardiso.REAL_NONSYM)
+    else  # T<:Complex
+        set_matrixtype!(ps, Pardiso.COMPLEX_NONSYM)
+    end
 
     # Initialize the default settings with the current matrix type
     pardisoinit(ps)
@@ -43,7 +47,6 @@ function rqi!(A::AbsMat{T},  # system matrix
         B .= A
         B -= μ.*I
 
-
         # Get the correct matrix to be sent into the pardiso function.
         # :N for normal matrix, :T for transpose, :C for conjugate
         A_pardiso = get_matrix(ps, B, :N)
@@ -59,6 +62,7 @@ function rqi!(A::AbsMat{T},  # system matrix
 
         # Compute the solutions X using the symbolic factorization.
         set_phase!(ps, Pardiso.SOLVE_ITERATIVE_REFINE)
+        # set_solver!(ps, Pardiso.ITERATIVE_SOLVER)
         pardiso(ps, x, A_pardiso, xold)
 
         normalize!(x)
