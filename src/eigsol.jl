@@ -13,18 +13,18 @@ function rqi!(A::AbsMat{T},  # system matrix
 
     B = similar(A)
     xold = similar(x)
-    ps = PardisoSolver();
-    set_msglvl!(ps, Pardiso.MESSAGE_LEVEL_ON)
+    ps = PardisoSolver()
+    # set_msglvl!(ps, Pardiso.MESSAGE_LEVEL_ON)
 
-    # First set the matrix type to handle general real symmetric matrices
-    if T<:Real
-        set_matrixtype!(ps, Pardiso.REAL_NONSYM)
-    else  # T<:Complex
-        set_matrixtype!(ps, Pardiso.COMPLEX_NONSYM)
-    end
-
-    # Initialize the default settings with the current matrix type
-    pardisoinit(ps)
+    # # First set the matrix type to handle general real symmetric matrices
+    # if T<:Real
+    #     set_matrixtype!(ps, Pardiso.REAL_NONSYM)
+    # else  # T<:Complex
+    #     set_matrixtype!(ps, Pardiso.COMPLEX_NONSYM)
+    # end
+    #
+    # # Initialize the default settings with the current matrix type
+    # pardisoinit(ps)
 
     λ = μ
     n = 0
@@ -46,24 +46,29 @@ function rqi!(A::AbsMat{T},  # system matrix
         # Version 3
         B .= A
         B -= μ.*I
+        solve!(ps, x, B, xold)
 
-        # Get the correct matrix to be sent into the pardiso function.
-        # :N for normal matrix, :T for transpose, :C for conjugate
-        A_pardiso = get_matrix(ps, B, :N)
-
-        # Analyze the matrix and compute a symbolic factorization.
-        set_phase!(ps, Pardiso.ANALYSIS)
-        set_perm!(ps, randperm(m))
-        pardiso(ps, A_pardiso, xold)
-
-        # Compute the numeric factorization.
-        set_phase!(ps, Pardiso.NUM_FACT)
-        pardiso(ps, A_pardiso, xold)
-
-        # Compute the solutions X using the symbolic factorization.
-        set_phase!(ps, Pardiso.SOLVE_ITERATIVE_REFINE)
-        # set_solver!(ps, Pardiso.ITERATIVE_SOLVER)
-        pardiso(ps, x, A_pardiso, xold)
+        # # Version 4
+        # B .= A
+        # B -= μ.*I
+        #
+        # # Get the correct matrix to be sent into the pardiso function.
+        # # :N for normal matrix, :T for transpose, :C for conjugate
+        # A_pardiso = get_matrix(ps, B, :N)
+        #
+        # # Analyze the matrix and compute a symbolic factorization.
+        # set_phase!(ps, Pardiso.ANALYSIS)
+        # set_perm!(ps, randperm(m))
+        # pardiso(ps, A_pardiso, xold)
+        #
+        # # Compute the numeric factorization.
+        # set_phase!(ps, Pardiso.NUM_FACT)
+        # pardiso(ps, A_pardiso, xold)
+        #
+        # # Compute the solutions X using the symbolic factorization.
+        # set_phase!(ps, Pardiso.SOLVE_ITERATIVE_REFINE)
+        # # set_solver!(ps, Pardiso.ITERATIVE_SOLVER)
+        # pardiso(ps, x, A_pardiso, xold)
 
         normalize!(x)
 
