@@ -1,10 +1,10 @@
 export rqi!
 
 function rqi!(A::AbsMat{T},  # system matrix
-              μ::T,  # guess eigenvalue
+              μ::Number,  # guess eigenvalue
               x::AbsVec{T},  # guess eigenvector; stores solution eigenvector
               maxit::Integer=10,  # max number of Rayleight quotient iteration
-              τ::Real=Base.rtoldefault(T)  # tolerance in solution
+              τ::Real=Base.rtoldefault(Float)  # tolerance in solution
              ) where {T<:Union{Float,CFloat}}
     m = size(A,1)
     I = similar(A)
