@@ -7,16 +7,16 @@ Base.isapprox(a::Tuple, b::Tuple; kws...) = all(p -> isapprox(p...; kws...), zip
 
 # @testset "MaxwellFDM" begin
 
-include("enumtype.jl")
-include("base.jl")
-include("phys.jl")
-include("grid.jl")
-include("object.jl")
-include("gridgen.jl")
-include("material.jl")
-include("smoothing.jl")
-include("operator.jl")
-include("pml.jl")
+# include("enumtype.jl")
+# include("base.jl")
+# include("phys.jl")
+# include("grid.jl")
+# include("object.jl")
+# include("gridgen.jl")
+# include("material.jl")
+# include("smoothing.jl")
+# include("operator.jl")
+# include("pml.jl")
 include("eigsol.jl")
 
 # end  # @testset "MaxwellFDM"

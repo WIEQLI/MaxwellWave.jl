@@ -34,7 +34,9 @@ A = poisson2d(∆x, ∆y, Nx, Ny)
 
 # Perform Rayleigh quotient iteration to calculate the numerical eigenvalue.
 x = rand(N)
+tic()
 λ = rqi!(A, λtheory, x)
+toc()
 
 # Prepare plot data.
 u = zeros(Nx+2, Ny+2)
