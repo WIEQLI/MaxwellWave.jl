@@ -14,7 +14,7 @@ function rqi!(A::AbsMat{T},  # system matrix
     B = similar(A)
     xold = similar(x)
     ps = PardisoSolver()
-    # set_msglvl!(ps, Pardiso.MESSAGE_LEVEL_ON)
+    set_msglvl!(ps, Pardiso.MESSAGE_LEVEL_ON)
 
     # # First set the matrix type to handle general real symmetric matrices
     # if T<:Real
