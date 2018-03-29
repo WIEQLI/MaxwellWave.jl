@@ -39,14 +39,14 @@ function rqi!(A::AbsMat{T},  # system matrix
         # x .= (A - μ.*I) \ xold
 
         # Version 2
-        # B .= A
-        # B -= μ.*I
-        # x .= B \ xold
-
-        # Version 3
         B .= A
         B -= μ.*I
-        solve!(ps, x, B, xold)
+        x .= B \ xold
+
+        # Version 3
+        # B .= A
+        # B -= μ.*I
+        # solve!(ps, x, B, xold)
 
         # # Version 4
         # B .= A
