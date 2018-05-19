@@ -1,6 +1,6 @@
 @testset "object" begin
 
-const rtol = Base.rtoldefault(Float64)
+const rtol = Base.rtoldefault(MaxwellFDM.Float)
 const one⁻ = 1 - rtol  # slightly less than 1
 const intv1⁻ = (-one⁻, one⁻)
 

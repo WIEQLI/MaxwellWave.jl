@@ -4,7 +4,7 @@
 
 # Calculate ghost points from l, L, and ebc.
 lghost(l::NTuple{2,NTuple{K,AbstractVector{<:Real}}},  # grid point locations
-       L::SVector{K,Float64},  # domain size
+       L::SVector{K,MaxwellFDM.Float},  # domain size
        ebc::SVector{K,EBC}  # encoded boundary condition
       ) where {K} =
     (map((ebcₖ,lprimₖ,ldualₖ,Lₖ) -> (ebcₖ==PDC ? 2ldualₖ[end]-lprimₖ[end] : lprimₖ[1]+Lₖ), ebc, SVector(l[nPR]), SVector(l[nDL]), L),  # lg[PRIM]

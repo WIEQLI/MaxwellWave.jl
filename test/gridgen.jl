@@ -7,8 +7,8 @@ rmax = R_MAX_DEFAULT  # 2.0
     intvprim = [ClosedInterval((-0.186399,0.502855),0.0689254), ClosedInterval((-0.330103,1.17077),0.150088)]
     intvdual = ClosedInterval[]
 
-    lprim0 = Float64[]
-    ldual0 = Float64[]
+    lprim0 = MaxwellFDM.Float[]
+    ldual0 = MaxwellFDM.Float[]
 
     sublprim = MaxwellFDM.gen_sublprim1d(domain, PRIM, intvprim, intvdual, lprim0, ldual0)
     # info("sublprim = $sublprim")
@@ -20,12 +20,12 @@ end  # @testset "gen_lprim1d for fixed intervals to fail"
     intvprim = [ClosedInterval((-100,-20)), ClosedInterval((20,100)), ClosedInterval((-30,30),1)]
     intvdual = ClosedInterval[]
 
-    lprim0 = Float64[-75, 75]
-    ldual0 = Float64[-10,0,10]
+    lprim0 = MaxwellFDM.Float[-75, 75]
+    ldual0 = MaxwellFDM.Float[-10,0,10]
 
     sublprim = MaxwellFDM.gen_sublprim1d(domain, PRIM, intvprim, intvdual, lprim0, ldual0)
     # info("sublprim = $sublprim")
-    @test typeof(sublprim) == Vector{Vector{Float64}}
+    @test typeof(sublprim) == Vector{Vector{MaxwellFDM.Float}}
     @test isodd(length(sublprim))
     subgrid = sublprim[1:2:end]
     ∆lt = sublprim[2:2:end]
@@ -47,12 +47,12 @@ end  # @testset "gen_lprim1d for fixed intervals"
     intvprim = [ClosedInterval((-100,-20)), ClosedInterval((20,100)), ClosedInterval((-30,30),1)]
     intvdual = ClosedInterval[]
 
-    lprim0 = Float64[-75, 75]
-    ldual0 = Float64[-10,0,10]
+    lprim0 = MaxwellFDM.Float[-75, 75]
+    ldual0 = MaxwellFDM.Float[-10,0,10]
 
     sublprim = MaxwellFDM.gen_sublprim1d(domain, DUAL, intvprim, intvdual, lprim0, ldual0)
     # info("sublprim = $sublprim")
-    @test typeof(sublprim) == Vector{Vector{Float64}}
+    @test typeof(sublprim) == Vector{Vector{MaxwellFDM.Float}}
     @test isodd(length(sublprim))
     subgrid = sublprim[1:2:end]
     ∆lt = sublprim[2:2:end]
@@ -83,7 +83,7 @@ end  # @testset "gen_lprim1d for fixed intervals, dual domain"
 
     sublprim = MaxwellFDM.gen_sublprim1d(domain, PRIM, intvprim, intvdual, lprim0, ldual0)
     # info("sublprim = $sublprim")
-    @test typeof(sublprim) == Vector{Vector{Float64}}
+    @test typeof(sublprim) == Vector{Vector{MaxwellFDM.Float}}
     @test isodd(length(sublprim))
     subgrid = sublprim[1:2:end]
     ∆lt = sublprim[2:2:end]
@@ -107,7 +107,7 @@ end  # @testset "gen_lprim1d for randomly generated intervals"
 
     sublprim = MaxwellFDM.gen_sublprim1d(domain, DUAL, intvprim, intvdual, lprim0, ldual0)
     # info("sublprim = $sublprim")
-    @test typeof(sublprim) == Vector{Vector{Float64}}
+    @test typeof(sublprim) == Vector{Vector{MaxwellFDM.Float}}
     @test isodd(length(sublprim))
     subgrid = sublprim[1:2:end]
     ∆lt = sublprim[2:2:end]
